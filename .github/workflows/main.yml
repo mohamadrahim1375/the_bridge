@@ -1,0 +1,21 @@
+name: Connect-to-Server
+on: 
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Start Tunnel
+      run: |
+        # دانلود ابزار کلودفلر در سرور گیت‌هاب
+        curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
+        chmod +x cloudflared
+        
+        # برقراری اتصال از گیت‌هاب به تونل سرور تو
+        # پورت ۴۴۴۴ را به عنوان پورت محلی در گیت‌هاب باز می‌کنیم
+        ./cloudflared access tcp --hostname painted-locations-allowed-miscellaneous.trycloudflare.com --url localhost:4444 &
+        
+        echo "Tunnel is running on port 4444..."
+        # زنده نگه داشتن سرور برای ۶ ساعت
+        sleep 21600
