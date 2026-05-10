@@ -1,33 +1,17 @@
-name: Connect-and-Test
+name: Connect-to-Server
 on: 
-  workflow_dispatch:
+  workflow_dispatch: # یعنی هر وقت خودمان خواستیم دکمه را بزنیم
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # استفاده از سرورهای لینوکسی گیت‌هاب
     steps:
-      - name: Download Cloudflared
-        run: |
-          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
-          chmod +x cloudflared
-
-      - name: Start Bridge Tunnel
-        run: |
-          # برقراری پل ارتباطی
-          sudo ./cloudflared access tcp --hostname alpiubvjhe-refer-upgrade-fold.trycloudflare.com --url localhost:443 &
-          
-          # ۳ ثانیه صبر برای پایداری تونل
-          sleep 3
-
-      - name: Check Connection (LOG)
-        run: |
-          echo "Checking connection to your VPS through the tunnel..."
-          # ارسال یک دستور ساده به پورت 443 محلی (که به سرور شما پل شده)
-          if nc -zv localhost 443; then
-            echo "SUCCESS: GitHub is connected to your VPS!"
-          else
-            echo "FAILED: GitHub cannot reach your VPS. Check your Server or Cloudflare Tunnel."
-          fi
-          
-          # زنده نگه داشتن برای مشاهده نتایج
-          sleep 21600
+    - name: Start Tunnel
+      run: |
+        # دانلود ابزار مورد نیاز
+        curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
+        chmod +x cloudflared
+        
+        # در اینجا ما یک تونل موقت می‌سازیم
+        # این کد ترافیک سرور گیت‌هاب را به آی‌پی سرور شما می‌فرستد
+        ./cloudflared access tcp --hostname 84.32.230.123 --url localhost:443
