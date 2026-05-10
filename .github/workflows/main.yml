@@ -8,14 +8,11 @@ jobs:
     steps:
     - name: Start Tunnel
       run: |
-        # دانلود ابزار کلودفلر در سرور گیت‌هاب
         curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
         chmod +x cloudflared
         
-        # برقراری اتصال از گیت‌هاب به تونل سرور تو
-        # پورت ۴۴۴۴ را به عنوان پورت محلی در گیت‌هاب باز می‌کنیم
-        ./cloudflared access tcp --hostname scenes-appearing-samuel-agreed.trycloudflare.com --url localhost:8090 &
+        # اتصال پورت 443 گیت‌هاب به تونل سرور شما
+        sudo ./cloudflared access tcp --hostname alpine-refer-upgrade-fold.trycloudflare.com --url localhost:443 &
         
-        echo "Tunnel is running on port 8090..."
-        # زنده نگه داشتن سرور برای ۶ ساعت
+        echo "Tunnel is Active on GitHub Port 443"
         sleep 21600
