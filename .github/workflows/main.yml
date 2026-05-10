@@ -1,4 +1,4 @@
-name: Connect-to-Server
+name: Connect-and-Test
 on: 
   workflow_dispatch:
 
@@ -13,10 +13,21 @@ jobs:
 
       - name: Start Bridge Tunnel
         run: |
-          # آدرس زیر را با آدرسی که در سرور گرفتی جایگزین کن
-          # پورت 443 گیت‌هاب را به تونل کلودفلر وصل می‌کند
+          # برقراری پل ارتباطی
           sudo ./cloudflared access tcp --hostname alpine-refer-upgrade-fold.trycloudflare.com --url localhost:443 &
           
-          echo "Bridge is successfully running on port 443..."
-          # این دستور باعث می‌شود اکشن تا 6 ساعت باز بماند
+          # ۳ ثانیه صبر برای پایداری تونل
+          sleep 3
+
+      - name: Check Connection (LOG)
+        run: |
+          echo "Checking connection to your VPS through the tunnel..."
+          # ارسال یک دستور ساده به پورت 443 محلی (که به سرور شما پل شده)
+          if nc -zv localhost 443; then
+            echo "SUCCESS: GitHub is connected to your VPS!"
+          else
+            echo "FAILED: GitHub cannot reach your VPS. Check your Server or Cloudflare Tunnel."
+          fi
+          
+          # زنده نگه داشتن برای مشاهده نتایج
           sleep 21600
