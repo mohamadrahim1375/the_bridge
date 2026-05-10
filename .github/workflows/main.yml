@@ -14,8 +14,8 @@ jobs:
         
         # برقراری اتصال از گیت‌هاب به تونل سرور تو
         # پورت ۴۴۴۴ را به عنوان پورت محلی در گیت‌هاب باز می‌کنیم
-        ./cloudflared access tcp --hostname painted-locations-allowed-miscellaneous.trycloudflare.com --url localhost:4444 &
+        ./cloudflared access tcp --hostname scenes-appearing-samuel-agreed.trycloudflare.com --url localhost:8090 &
         
-        echo "Tunnel is running on port 4444..."
+        echo "Tunnel is running on port 8090..."
         # زنده نگه داشتن سرور برای ۶ ساعت
         sleep 21600
