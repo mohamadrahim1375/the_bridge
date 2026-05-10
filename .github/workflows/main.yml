@@ -6,13 +6,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Start Tunnel
-      run: |
-        curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
-        chmod +x cloudflared
-        
-        # اتصال پورت 443 گیت‌هاب به تونل سرور شما
-        sudo ./cloudflared access tcp --hostname alpine-refer-upgrade-fold.trycloudflare.com --url localhost:443 &
-        
-        echo "Tunnel is Active on GitHub Port 443"
-        sleep 21600
+      - name: Download Cloudflared
+        run: |
+          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
+          chmod +x cloudflared
+
+      - name: Start Bridge Tunnel
+        run: |
+          # آدرس زیر را با آدرسی که در سرور گرفتی جایگزین کن
+          # پورت 443 گیت‌هاب را به تونل کلودفلر وصل می‌کند
+          sudo ./cloudflared access tcp --hostname alpine-refer-upgrade-fold.trycloudflare.com --url localhost:443 &
+          
+          echo "Bridge is successfully running on port 443..."
+          # این دستور باعث می‌شود اکشن تا 6 ساعت باز بماند
+          sleep 21600
