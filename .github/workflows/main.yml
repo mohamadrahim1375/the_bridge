@@ -14,7 +14,7 @@ jobs:
       - name: Start Bridge Tunnel
         run: |
           # برقراری پل ارتباطی
-          sudo ./cloudflared access tcp --hostname alpine-refer-upgrade-fold.trycloudflare.com --url localhost:443 &
+          sudo ./cloudflared access tcp --hostname alpiubvjhe-refer-upgrade-fold.trycloudflare.com --url localhost:443 &
           
           # ۳ ثانیه صبر برای پایداری تونل
           sleep 3
